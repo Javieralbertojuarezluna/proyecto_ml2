@@ -1,14 +1,33 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
-import pickle
+import zipfile
+import io
 import joblib
 
-model = joblib.load('rfc.pkl')
-cols=['battery_power', 'blue', 'clock_speed', 'dual_sim', 'fc', 'four_g',
-       'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height',
-       'px_width', 'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g',
-       'touch_screen', 'wifi']    
+# Función para cargar el modelo desde el archivo .zip
+def load_model_from_zip():
+    # Ruta del archivo zip
+    zip_path = "rfc.zip"
+
+    # Nombre del archivo .pkl dentro del zip
+    pkl_filename = "rfc.pkl"
+
+    # Cargar el archivo .pkl desde el zip
+    with zipfile.ZipFile(zip_path, 'r') as zip_file:
+        with zip_file.open(pkl_filename) as pkl_file:
+            model = joblib.load(pkl_file)
+
+    return model
+
+# Cargar el modelo
+model = load_model_from_zip()
+
+# Columnas del conjunto de datos
+cols = ['battery_power', 'blue', 'clock_speed', 'dual_sim', 'fc', 'four_g',
+        'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height',
+        'px_width', 'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g',
+        'touch_screen', 'wifi']
 
 def main(): 
     st.title("Predictor de Precios de celulares")
@@ -23,7 +42,7 @@ def main():
     </ul>
     </div>
     <br>
-    <br>
+    
     """
     
     st.markdown(html_temp, unsafe_allow_html=True)
@@ -77,5 +96,3 @@ def main():
 
 if __name__ == '__main__': 
     main()
-
-
