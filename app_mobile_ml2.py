@@ -30,7 +30,7 @@ cols = ['battery_power', 'blue', 'clock_speed', 'dual_sim', 'fc', 'four_g',
         'touch_screen', 'wifi']
 
 def main(): 
-    st.title("Predictor de Precios de celulares")
+    st.title("Clasificador de Precios de celulares")
     html_temp = """
     <div style="background-color: #800020; padding: 10px">
     <h2 style="color: gold; text-align: center;">Universidad Panamericaca MCD</h2>
@@ -46,26 +46,31 @@ def main():
     """
     
     st.markdown(html_temp, unsafe_allow_html=True)
-    battery_power = st.text_input("Battery power", "0") 
-    blue = st.text_input("Blue", "0")
-    clock_speed = st.text_input("Clock speed", "0.0")
-    dual_sim = st.text_input("Dual sim", "0")
-    fc = st.text_input("fc", "0")
-    four_g = st.text_input("four_g", "0")
-    int_memory = st.text_input("int_memory", "0")
-    m_dep = st.text_input("m_dep", "0.0")
-    mobile_wt = st.text_input("mobile_wt", "0")
-    n_cores = st.text_input("n_cores", "0")
-    pc = st.text_input("pc", "0")
-    px_height = st.text_input("px_height", "0")
-    px_width = st.text_input("px_width", "0")
-    ram = st.text_input("ram", "0")
-    sc_h = st.text_input("sc_h", "0")
-    sc_w = st.text_input("sc_w", "0")
-    talk_time = st.text_input("talk_time", "0")
-    three_g = st.text_input("three_g", "0")
-    touch_screen = st.text_input("touch_screen", "0")
-    wifi = st.text_input("wifi", "0")
+    
+    # Mapear valores numéricos a categorías para variables binarias
+    binario_map = {0: "No", 1: "Sí"}
+
+    battery_power = st.text_input("Total de batería que puede almacenar en mAh", "0") 
+    blue = st.radio("¿Tiene Bluetooth?", options=[0, 1], format_func=lambda x: binario_map[x])
+    clock_speed = st.text_input("Velocidad del microprocesador (segundos)", "0.0")
+    dual_sim = st.radio("¿Doble SIM?", options=[0, 1], format_func=lambda x: binario_map[x])
+    fc = st.text_input("MP de cámara frontal", "0")
+    four_g = st.radio("¿Es 4G?", options=[0, 1], format_func=lambda x: binario_map[x])
+    int_memory = st.text_input("Memoria interna en GB", "0")
+    m_dep = st.text_input("Grosor del celular en cm", "0.0")
+    mobile_wt = st.text_input("Peso del celular", "0")
+    n_cores = st.text_input("Número de cores del procesador", "0")
+    pc = st.text_input("MP de cámara principal", "0")
+    px_height = st.text_input("Resolución de pixeles en altura", "0")
+    px_width = st.text_input("Resolución de pixeles en anchura", "0")
+    ram = st.text_input("Memoria RAM en MB", "0")
+    sc_h = st.text_input("Altura de pantalla en cm", "0")
+    sc_w = st.text_input("Anchura de pantalla en cm", "0")
+    talk_time = st.text_input("Duración de batería en horas en una sola carga", "0")
+    three_g = st.radio("¿Cuenta con 3G?", options=[0, 1], format_func=lambda x: binario_map[x])
+    touch_screen = st.radio("¿Es touch screen?", options=[0, 1], format_func=lambda x: binario_map[x])
+    wifi = st.radio("¿Tiene WIFI?", options=[0, 1], format_func=lambda x: binario_map[x])
+    
     
     if st.button("Predict"): 
         features = [[battery_power, blue, clock_speed, dual_sim, fc, four_g, int_memory, m_dep, mobile_wt, n_cores,pc,px_height,px_width,ram,sc_h,sc_w,
