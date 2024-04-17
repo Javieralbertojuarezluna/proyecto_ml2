@@ -8,7 +8,7 @@ model = joblib.load('rfc_vf.pkl')
 cols=['battery_power', 'mobile_wt','px_height', 'px_width', 'ram']    
 
 def main(): 
-    st.title("Predictor de Precios de celulares")
+    st.title("Clasificador de Precios de celulares")
     html_temp = """
     <div style="background-color: #800020; padding: 10px">
     <h2 style="color: gold; text-align: center;">Universidad Panamericaca MCD</h2>
